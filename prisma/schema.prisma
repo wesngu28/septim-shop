@@ -14,10 +14,23 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
+model House {
+    id        Int   @id @default(autoincrement())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    name      String
+    slug      String
+    price     Float
+    addPrice Float
+    askingQuest String?
+    locator String
+    province String
+    description String
+    image     String
+    upgrades  String
+    sellable  Boolean
+    sellableReason String?
+    sold      Boolean
 }
 
 // Necessary for Next auth
