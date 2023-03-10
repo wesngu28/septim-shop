@@ -164,7 +164,7 @@ async function realtor() {
   //     price: 25000,
   //     addPrice: 23200,
   //     description:
-  //       "Prepare for a life of luxury and splendor when your purchase this strikingly beautiful Skingrad estate, Rosethorn Hall. Positioned in the beautiful and large city of Skingrad, Rosethorn is only a hop awy from the finest wineries in Cyrodill, making it perfect for any discerning wine connoisseur.",
+  //       "Prepare for a life of luxury and splendor when your purchase this strikingly beautiful Skingrad estate, Rosethorn Hall. Positioned in the beautiful and large city of Skingrad, Rosethorn is only a hop awy from the finest wineries in Cyrodiil, making it perfect for any discerning wine connoisseur.",
   //     sellable: true,
   //     sold: false,
   //     upgrades: JSON.stringify([
@@ -211,7 +211,7 @@ async function realtor() {
   //     ]),
   //     image: JSON.stringify(["https://images.uesp.net/thumb/6/6d/OB-place-Rosethorn_Hall.jpg/784px-OB-place-Rosethorn_Hall.jpg"]),
   //     locator: "Skingrad",
-  //     province: "Cyrodill"
+  //     province: "Cyrodiil"
   //   },
   // });
   // const benirus = await prisma.house.create({
@@ -227,7 +227,7 @@ async function realtor() {
   //     upgrades: JSON.stringify([]),
   //     image: JSON.stringify(["https://images.uesp.net/thumb/e/e8/OB-place-Benirus_Manor_Restored.jpg/799px-OB-place-Benirus_Manor_Restored.jpg"]),
   //     locator: "Anvil",
-  //     province: "Cyrodill"
+  //     province: "Cyrodiil"
   //   },
   // });
 }
