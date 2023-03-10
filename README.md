@@ -1,3 +1,7 @@
+# Imperial Housing Authority
+
+An e-commerce application that is supposed to represent a storefront for an Imperial-subsidized housing agency from the Elder Scrolls. Users can add "house tours" to their carts and checkout with Stripe (where the fake Septim currency is convereted to USD). Takes place in 4E 201, where the Stormcloak Rebellion in Skyrim has just taken place. Homes are only supported from Oblivion and Skyrim (Cyrodiil and Skyrim). Might do Morrowind as well. Daggerfall is a pass since the pictures are just so ugly.
+
 # Create T3 App
 
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.

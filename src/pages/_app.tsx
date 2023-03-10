@@ -13,9 +13,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black font-fjord">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-yellow-800 to-yellow-900 font-fjord">
         <Navbar />
+        <div className="flex flex-1 flex-col items-center justify-center">
         <Component {...pageProps} />
+        </div>
       </main>
     </SessionProvider>
   );
