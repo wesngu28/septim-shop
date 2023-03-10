@@ -24,14 +24,14 @@ const HouseFilter = ({filter, lifted}: Props) => {
       <input
         className="mr-2"
         type="checkbox"
-        id="Cyrodill"
-        name="Cyrodill"
-        value="Cyrodill"
+        id="Cyrodiil"
+        name="Cyrodiil"
+        value="Cyrodiil"
         onChange={() => {
-          helper("Cyrodill")
+          helper("Cyrodiil")
         }}
       />
-      <label htmlFor="Cyrodill">Cyrodill</label>
+      <label htmlFor="Cyrodiil">Cyrodiil</label>
     </div>
     <div>
       <input

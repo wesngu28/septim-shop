@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useState } from "react";
+import {  useState } from "react";
 
 import { api } from "~/utils/api";
 import HouseFilter from "./filter";
@@ -17,7 +17,7 @@ const Browse: NextPage = () => {
     <div className="flex gap-16">
       <HouseFilter filter={filter} lifted={liftSetFilter} />
       <div className="grid max-w-7xl grid-cols-5 gap-8 auto-rows-fr">
-        {houses.data?.filter(house => filter.province.length === 0 || filter.province.includes(house.province as string)).filter(house => !filter.status || (filter.status === true && house.sellable === true)).sort((a, b) => {
+        {houses.data?.filter(house => filter.province.length === 0 || filter.province.includes(house.province)).filter(house => !filter.status || (filter.status === true && house.sellable === true)).sort((a, b) => {
         let aPrice = a.price
         let bPrice = b.price
         switch (filter.show) {
