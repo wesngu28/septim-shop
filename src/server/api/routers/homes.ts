@@ -8,6 +8,14 @@ import {
 
 export const homeRouter = createTRPCRouter({
 
+  get: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.house.findFirst({
+      where: {
+        slug: input
+      }
+    });
+  }),
+
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.house.findMany();
   }),
