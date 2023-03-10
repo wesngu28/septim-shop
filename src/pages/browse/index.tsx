@@ -45,7 +45,7 @@ const Browse: NextPage = () => {
               <div
                 className={`${
                   house.sellable ? "opacity-100" : "opacity-50"
-                } relative rounded-lg border-2 border-transparent bg-gray-800 text-white transition-all duration-500 hover:scale-105 hover:border-gray-700`}
+                } relative rounded-lg h-80 bg-gray-800 text-white transition-all duration-500 hover:scale-105`}
               >
                 {!house.sellable && (
                   <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-gray-800 opacity-80">
@@ -58,7 +58,7 @@ const Browse: NextPage = () => {
                   alt={house.name}
                   src={(JSON.parse(house.image) as string[])[0]}
                 />
-                <div className="flex flex-col p-2">
+                <div className="flex flex-col p-2 ml-2">
                   <p className="mt-4 text-xl font-semibold">{house.name}</p>
                   <div className="ju mt-4 flex h-[24px] items-center gap-2 font-thin">{filter.show === "upfront" ? house.price : filter.show === "upgrade" ? house.addPrice : house.price + house.addPrice}
                     <img alt="septim" className="h-full" src="/septim.webp" />
