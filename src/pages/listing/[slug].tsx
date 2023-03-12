@@ -1,10 +1,14 @@
 import Error from "next/error";
 import { useRouter } from "next/router";
+import { addItem } from "~/redux/itemSlice";
+import { useAppDispatch } from "~/redux/store";
 import { api } from "~/utils/api";
 
 const Listing = () => {
   const router = useRouter();
   const { slug } = router.query;
+
+  const dispatch = useAppDispatch()
 
   const { data, isLoading } = api.home.get.useQuery(slug as string);
 
@@ -13,7 +17,6 @@ const Listing = () => {
   }
 
   if (!data) {
-    console.log("wtf !!");
     return <Error statusCode={404} />;
   }
   return (
@@ -51,6 +54,14 @@ const Listing = () => {
         </div>
         <div className="flex flex-col items-center gap-4 my-4">
           <button
+            onClick={() => dispatch(
+              addItem({
+                name: data.name,
+                price: data.price,
+                image: (JSON.parse(data.image) as string[])[0] as string,
+                qty: 1
+              })
+            )}
             disabled={!data.sellable}
             className={`${
               !data.sellable ? "opacity-40" : ""
