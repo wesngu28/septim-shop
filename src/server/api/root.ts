@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { homeRouter } from "~/server/api/routers/homes";
+import { stripeRouter } from "./routers/stripe";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +9,7 @@ import { homeRouter } from "~/server/api/routers/homes";
  */
 export const appRouter = createTRPCRouter({
   home: homeRouter,
+  stripe: stripeRouter
 });
 
 // export type definition of API
