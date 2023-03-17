@@ -1,12 +1,17 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { useRef } from "react"
 import { changeQty, selectCart } from "~/redux/itemSlice"
 import { useAppDispatch, useAppSelector } from "~/redux/store"
+import { api } from "~/utils/api"
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
   const { cart } = useAppSelector(selectCart)
   const cartContainer = useRef<HTMLDivElement | null>(null)
+  const { mutateAsync: checkoutSession } = api.stripe.checkoutSession.useMutation();
+  const { push } = useRouter();
 
   return (
     <nav className="w-full flex flex-initial justify-between max-w-7xl text-white items-center p-8 gap-8">
@@ -21,17 +26,17 @@ const Navbar = () => {
         <img width={55} height={50} src="/cart.png" />
         <span className="absolute top-0 right-0 bg-red-400 px-2 rounded-lg text-lg">{cart.reduce((acc, item) => acc + item.qty, 0)}</span>
       </button>
-      <div ref={cartContainer}   onClick={(e) => {
-    if (e.target === e.currentTarget) {
-      cartContainer.current?.classList.toggle('hidden');
-    }
-  }} className="hidden fixed w-screen h-screen inset-0 bg-[rgba(0,0,0,.5)]">
+      <div ref={cartContainer} onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          cartContainer.current?.classList.toggle('hidden');
+        }
+      }} className="hidden fixed w-screen h-screen inset-0 bg-[rgba(0,0,0,.5)]">
         <div className="absolute right-0 w-[550px] bg-red-700 h-full">
           <div className="p-8">
           <h2 className="mb-2 text-2xl font-semibold tracking-tight">Your Cart</h2>
           <p>A tour is equal to 10% of the house value.</p>
           </div>
-          <div className="p-8">
+          <div className="p-8 max-h-[80vh] overflow-y-auto">
           {cart.map(item =>
             <div key={item.name} className="grid grid-cols-4 gap-8 items-center my-4">
               <div className="col-span-2">
@@ -49,6 +54,13 @@ const Navbar = () => {
             </div>
             )}
           </div>
+          <p className="mt-6 ml-8 text-xl font-semibold">{cart.reduce((acc, item) => acc + item.price, 0)} Septims</p>
+          <button onClick={async () => {
+              const { checkoutUrl } = await checkoutSession(cart);
+              if (checkoutUrl) {
+                void push(checkoutUrl);
+          }
+          }} className="mt-4 ml-8 p-4 bg-red-300">Check Out</button>
         </div>
       </div>
     </nav>

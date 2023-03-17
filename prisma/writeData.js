@@ -3,52 +3,53 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function realtor() {
-  const skyrimHouses3 = await prisma.house.create({
-    data: {
-      name: "Test Homes",
-      slug: "tester3",
-      price: 5000,
-      addPrice: 1800,
-      description:
-        "Located in the Plains District, Breezehome offers any experienced traveler the amenities they need to charge up, gear up, and prepare for a journey on the Tundra. With close access to Warmaidens, the town gate, and Dragonsreach, Breezehome is perfect for any companion or thane of Whiterun.",
-      sellable: true,
-      sold: false,
-      upgrades: JSON.stringify([
-        {
-          upgrade: "Living Room",
-          price: 250,
-        },
-        {
-          upgrade: "Dining Room",
-          price: 250,
-        },
-        {
-          upgrade: "Kitchen",
-          price: 300,
-        },
-        {
-          upgrade: "Loft",
-          price: 200,
-        },
-        {
-          upgrade: "Bedroom",
-          price: 300,
-        },
-        {
-          upgrade: "Alchemy Laboratory",
-          price: 500,
-        },
-        {
-          upgrade: "Children's Bedroom",
-          price: 500,
-        },
-      ]),
-      image: JSON.stringify(["https://static.wikia.nocookie.net/elderscrolls/images/7/72/Breezhome_Improved.png"]),
-      locator: "Solitude",
-      province: "Skyrim",
-      seller: "Falk Firebeard"
-    },
-  });
+  try {
+  // const skyrimHouses3 = await prisma.house.create({
+  //   data: {
+  //     name: "Test Homes",
+  //     slug: "tester3",
+  //     price: 5000,
+  //     addPrice: 1800,
+  //     description:
+  //       "Located in the Plains District, Breezehome offers any experienced traveler the amenities they need to charge up, gear up, and prepare for a journey on the Tundra. With close access to Warmaidens, the town gate, and Dragonsreach, Breezehome is perfect for any companion or thane of Whiterun.",
+  //     sellable: true,
+  //     sold: false,
+  //     upgrades: JSON.stringify([
+  //       {
+  //         upgrade: "Living Room",
+  //         price: 250,
+  //       },
+  //       {
+  //         upgrade: "Dining Room",
+  //         price: 250,
+  //       },
+  //       {
+  //         upgrade: "Kitchen",
+  //         price: 300,
+  //       },
+  //       {
+  //         upgrade: "Loft",
+  //         price: 200,
+  //       },
+  //       {
+  //         upgrade: "Bedroom",
+  //         price: 300,
+  //       },
+  //       {
+  //         upgrade: "Alchemy Laboratory",
+  //         price: 500,
+  //       },
+  //       {
+  //         upgrade: "Children's Bedroom",
+  //         price: 500,
+  //       },
+  //     ]),
+  //     image: JSON.stringify(["https://static.wikia.nocookie.net/elderscrolls/images/7/72/Breezhome_Improved.png"]),
+  //     locator: "Solitude",
+  //     province: "Skyrim",
+  //     seller: "Falk Firebeard"
+  //   },
+  // });
   // const skyrimHouses = await prisma.house.create({
   //   data: {
   //     name: "Breezehome",
@@ -106,42 +107,51 @@ async function realtor() {
   //     sellable: false,
   //     sellableReason: "Hjerim is currently not purchaseable due to the Stormcloak rebellion, with additional concerns of an active serial killer within Windhelm.",
   //     sold: false,
-  //     upgrades: JSON.stringify([
-  //       {
-  //         upgrade: "Living Room",
-  //         price: 1500,
-  //       },
-  //       {
-  //         upgrade: "Armory",
-  //         price: 2000,
-  //       },
-  //       {
-  //         upgrade: "Enchanting Laboratory",
-  //         price: 1500,
-  //       },
-  //       {
-  //         upgrade: "Alchemy Laboratory",
-  //         price: 1500,
-  //       },
-  //       {
-  //         upgrade: "Bedroom",
-  //         price: 1000,
-  //       },
-  //       {
-  //         upgrade: "Kitchen",
-  //         price: 1000,
-  //       },
-  //       {
-  //         upgrade: "Children's Room",
-  //         price: 1250,
-  //       },
-  //     ]),
   //     image: JSON.stringify(["https://static.wikia.nocookie.net/elderscrolls/images/7/7a/Hjerim_House.png/revision/latest?cb=20141014123212"]),
   //     locator: "Windhelm",
   //     province: "Skyrim",
   //     seller: "Captain Lonely-Gale"
   //   },
   // });
+  // const hjerimUpgrades = await prisma.upgrade.createMany({
+  //   data: [
+  //     {
+  //       houseId: "hjerim",
+  //       price: 1500,
+  //       upgrade: "Living Room"
+  //     },
+  //     {
+  //       houseId: "hjerim",
+  //       price: 2000,
+  //       upgrade: "Armory"
+  //     },
+  //     {
+  //       houseId: "hjerim",
+  //       price: 1500,
+  //       upgrade: "Enchanting Laboratory"
+  //     },
+  //     {
+  //       houseId: "hjerim",
+  //       price: 1500,
+  //       upgrade: "Alchemy Laboratory"
+  //     },
+  //     {
+  //       houseId: "hjerim",
+  //       price: 1000,
+  //       upgrade: "Bedroom"
+  //     },
+  //     {
+  //       houseId: "hjerim",
+  //       price: 1250,
+  //       upgrade: "Children's Room"
+  //     },
+  //     {
+  //       houseId: "hjerim",
+  //       price: 1000,
+  //       upgrade: "Kitchen"
+  //     }
+  //   ],
+  // })
   // const honeyside = await prisma.house.create({
   //   data: {
   //     name: "Honeyside",
@@ -207,64 +217,76 @@ async function realtor() {
   //     seller: "Imperial Housing Agency"
   //   },
   // });
-  // const rosethorn = await prisma.house.create({
-  //   data: {
-  //     name: "Rosethorn Hall",
-  //     slug: "rosethorn",
-  //     price: 25000,
-  //     addPrice: 23200,
-  //     description:
-  //       "Prepare for a life of luxury and splendor when your purchase this strikingly beautiful Skingrad estate, Rosethorn Hall. Positioned in the beautiful and large city of Skingrad, Rosethorn is only a hop awy from the finest wineries in Cyrodiil, making it perfect for any discerning wine connoisseur.",
-  //     sellable: true,
-  //     sold: false,
-  //     upgrades: JSON.stringify([
-  //       {
-  //         upgrade: "Balcony",
-  //         price: 3000,
-  //       },
-  //       {
-  //         upgrade: "Dining Room",
-  //         price: 1600,
-  //       },
-  //       {
-  //         upgrade: "Kitchen",
-  //         price: 1600,
-  //       },
-  //       {
-  //         upgrade: "Interior Upgrades",
-  //         price: 2600,
-  //       },
-  //       {
-  //         upgrade: "Bedroom",
-  //         price: 1600,
-  //       },
-  //       {
-  //         upgrade: "Servants Quarters",
-  //         price: 1600,
-  //       },
-  //       {
-  //         upgrade: "Sitting Area",
-  //         price: 1600,
-  //       },
-  //       {
-  //         upgrade: "Storage",
-  //         price: 1600
-  //       },
-  //       {
-  //         upgrade: "Study",
-  //         price: 1600
-  //       },
-  //       {
-  //         upgrade: "Upper Hall Furnishings",
-  //         price: 4800
-  //       },
-  //     ]),
-  //     image: JSON.stringify(["https://images.uesp.net/thumb/6/6d/OB-place-Rosethorn_Hall.jpg/784px-OB-place-Rosethorn_Hall.jpg"]),
-  //     locator: "Skingrad",
-  //     province: "Cyrodiil",
-  //     seller: "Shum gro-Yarug"
-  //   },
-  // });
+  const rosethorn = await prisma.house.create({
+    data: {
+      name: "Rosethorn Hall",
+      slug: "rosethorn",
+      price: 25000,
+      addPrice: 23200,
+      description:
+        "Prepare for a life of luxury and splendor when your purchase this strikingly beautiful Skingrad estate, Rosethorn Hall. Positioned in the beautiful and large city of Skingrad, Rosethorn is only a hop awy from the finest wineries in Cyrodiil, making it perfect for any discerning wine connoisseur.",
+      sellable: true,
+      sold: false,
+      image: ["https://images.uesp.net/thumb/6/6d/OB-place-Rosethorn_Hall.jpg/784px-OB-place-Rosethorn_Hall.jpg"],
+      locator: "Skingrad",
+      province: "Cyrodiil",
+      seller: "Shum gro-Yarug"
+    },
+  });
+  const rosethornUpgrades = await prisma.upgrade.createMany({
+    data: [
+      {
+        houseId: "rosethorn",
+        upgrade: "Balcony",
+        price: 3000,
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Dining Room",
+        price: 1600,
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Kitchen",
+        price: 1600,
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Interior Upgrades",
+        price: 2600,
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Bedroom",
+        price: 1600,
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Servants Quarters",
+        price: 1600,
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Sitting Area",
+        price: 1600,
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Storage",
+        price: 1600
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Study",
+        price: 1600
+      },
+      {
+        houseId: "rosethorn",
+        upgrade: "Upper Hall Furnishings",
+        price: 4800
+      },
+    ],
+  })
   // const benirus = await prisma.house.create({
   //   data: {
   //     name: "Benirus Manor",
@@ -282,6 +304,9 @@ async function realtor() {
   //     seller: "Velwyn Benirus"
   //   },
   // });
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 realtor()

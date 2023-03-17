@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -15,23 +15,23 @@ datasource db {
 }
 
 model House {
-    id        Int   @id @default(autoincrement())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    name      String
-    slug      String
-    price     Float
-    addPrice Float
-    askingQuest String?
-    locator String
-    province String
-    description String
-    image     String
-    upgrades  String
-    sellable  Boolean
+    id             String    @id @default(cuid())
+    createdAt      DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
+    name           String
+    slug           String    @unique
+    price          Float
+    addPrice       Float
+    askingQuest    String?
+    locator        String
+    province       String
+    description    String
+    image          String[]
+    upgrades       Upgrade[]
+    sellable       Boolean
     sellableReason String?
-    sold      Boolean
-    seller    String
+    sold           Boolean
+    seller         String
 }
 
 // Necessary for Next auth
@@ -69,6 +69,9 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    orders        Order[]
+    items         Item[]
+    stripeId      String?   @unique
 }
 
 model VerificationToken {
@@ -77,4 +80,32 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Upgrade {
+    id      String @id @default(cuid())
+    upgrade String
+    price   Float
+    house   House  @relation(fields: [houseId], references: [slug])
+    houseId String
+}
+
+model Order {
+    id     String  @id @default(cuid())
+    items  Item[]
+    User   User?   @relation(fields: [userId], references: [stripeId])
+    userId String?
+}
+
+model Item {
+    id       String   @id @default(cuid())
+    product  String
+    image    String?
+    price    Float
+    quantity Int
+    date     DateTime?
+    order    Order    @relation(fields: [orderId], references: [id])
+    orderId  String
+    userId   String?
+    user     User?    @relation(fields: [userId], references: [stripeId])
 }
