@@ -1,3 +1,5 @@
+import { PrismaClient } from "@prisma/client";
+import Stripe from "stripe";
 import { z } from "zod";
 
 import {
@@ -8,6 +10,8 @@ import {
 export const stripeRouter = createTRPCRouter({
 
   checkoutSession: publicProcedure.input(z.array(z.object({name: z.string(), image: z.string(), price: z.number(), qty: z.number()}))).mutation(async ({ ctx, input }) => {
+
+    const checkoutId = await getCheckoutId(ctx.stripe, ctx.prisma, ctx.session?.user.id)
 
     const session = await ctx.stripe.checkout.sessions.create({
       line_items: input.map(item => {
@@ -24,13 +28,16 @@ export const stripeRouter = createTRPCRouter({
             enabled: true,
             minimum: 1
           },
-          quantity: item.qty
+          quantity: item.qty,
         }
       }),
       mode: 'payment',
       success_url: `http://localhost:3000/?success=true`,
       cancel_url: `http://localhost:3000/?canceled=true`,
+      customer: checkoutId,
+      client_reference_id: ctx.session?.user.id
     });
+    console.log(session)
 
     if (!session) throw new Error ("Could not checkout")
     return { checkoutUrl: session.url }
@@ -38,3 +45,36 @@ export const stripeRouter = createTRPCRouter({
   }),
 
 });
+
+async function getCheckoutId(stripe: Stripe, prisma: PrismaClient, user: string | undefined) {
+  if (!user) return
+
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      id: user
+    }
+  })
+
+  if (!currentUser) throw new Error ("No user found")
+
+  if (currentUser.stripeId) return currentUser.stripeId as string
+
+  const newCustomer = await stripe.customers.create({
+    email: currentUser.email ?? undefined,
+    name: currentUser.name ?? undefined,
+    metadata: {
+      user
+    }
+  })
+
+  const update = await prisma.user.update({
+    where: {
+      id: user
+    },
+    data: {
+      stripeId: newCustomer.id
+    }
+  })
+
+  return update.stripeId as string
+}

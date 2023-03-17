@@ -1,5 +1,6 @@
 import Error from "next/error";
 import { useRouter } from "next/router";
+import { ChangeEvent, SetStateAction, useState } from "react";
 import { addItem } from "~/redux/itemSlice";
 import { useAppDispatch } from "~/redux/store";
 import { api } from "~/utils/api";
@@ -7,7 +8,11 @@ import { api } from "~/utils/api";
 const Listing = () => {
   const router = useRouter();
   const { slug } = router.query;
+  const [date, setDate] = useState("");
 
+  const handleDateChange = (event: ChangeEvent) => {
+    setDate((event.target as HTMLInputElement).value);
+  };
   const dispatch = useAppDispatch()
 
   const { data, isLoading } = api.home.get.useQuery(slug as string);
@@ -27,7 +32,7 @@ const Listing = () => {
           <div className="row-span-2 h-96">
             <img
               className="h-full w-full object-cover"
-              src={(JSON.parse(data.image) as string[])[0]}
+              src={data.image[0]}
             />
           </div>
           <img
@@ -50,21 +55,26 @@ const Listing = () => {
           </div> : <div className="flex h-[24px] items-center gap-2 font-thin">
             Requires Task
           </div>}
-          <p>{JSON.parse(data.upgrades).length} Upgrades</p>
+          <p>{data.upgrades.length} Upgrades</p>
         </div>
         <div className="flex flex-col items-center gap-4 my-4">
+          <input type={"date"}         id="date"
+        name="date"
+        value={date}
+        onChange={handleDateChange} className="text-black" />
           <button
             onClick={() => dispatch(
               addItem({
                 name: data.name,
                 price: data.price,
-                image: (JSON.parse(data.image) as string[])[0] as string,
-                qty: 1
+                image: data.image[0] as string,
+                qty: 1,
+                date: date
               })
             )}
-            disabled={!data.sellable}
+            disabled={!data.sellable || !date}
             className={`${
-              !data.sellable ? "opacity-40" : ""
+              !data.sellable || !date ? "opacity-40" : ""
             } rounded-lg bg-blue-900 p-3`}
           >
             Add to Tour Cart
@@ -85,12 +95,12 @@ const Listing = () => {
           {data.askingQuest && <p className="mt-4 mb-2">{data.askingQuest}
           </p>}
           <p className="mt-4 mb-2">
-            {data.name} has {JSON.parse(data.upgrades).length} paths of
+            {data.name} has {data.upgrades.length} paths of
             improvement.
           </p>
           <div className="grid grid-cols-2">
             <div className="grid grid-cols-2 gap-4">
-              {JSON.parse(data.upgrades).map((upgrade) => {
+              {data.upgrades.map((upgrade) => {
                 return (
                   <>
                     <div>{upgrade.upgrade}</div>

@@ -12,7 +12,8 @@ export const homeRouter = createTRPCRouter({
     return ctx.prisma.house.findFirst({
       where: {
         slug: input
-      }
+      },
+      include: { upgrades: true },
     });
   }),
 

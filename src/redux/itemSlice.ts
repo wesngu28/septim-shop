@@ -6,6 +6,7 @@ export type Item = {
   image: string
   price: number
   qty: number
+  date: string
 }
 
 interface CartState {

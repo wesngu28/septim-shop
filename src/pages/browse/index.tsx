@@ -56,7 +56,7 @@ const Browse: NextPage = () => {
                 )}
                 <img
                   alt={house.name}
-                  src={(JSON.parse(house.image) as string[])[0]}
+                  src={house.image[0]}
                 />
                 <div className="flex flex-col p-2 ml-2">
                   <p className="mt-4 text-xl font-semibold">{house.name}</p>
