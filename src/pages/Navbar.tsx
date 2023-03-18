@@ -5,6 +5,7 @@ import { useRef } from "react"
 import { changeQty, selectCart } from "~/redux/itemSlice"
 import { useAppDispatch, useAppSelector } from "~/redux/store"
 import { api } from "~/utils/api"
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
@@ -22,10 +23,15 @@ const Navbar = () => {
         </Link>
         <Link href="/browse">Browse Homes</Link>
       </div>
-      <button onClick={() => cartContainer.current?.classList.toggle('hidden')} className="relative">
+    <div className="flex gap-8">
+    <button onClick={() => cartContainer.current?.classList.toggle('hidden')} className="relative">
         <img width={55} height={50} src="/cart.png" />
         <span className="absolute top-0 right-0 bg-red-400 px-2 rounded-lg text-lg">{cart.reduce((acc, item) => acc + item.qty, 0)}</span>
       </button>
+      <div className="flex flex-col items-center gap-2">
+          <AuthShowcase />
+        </div>
+    </div>
       <div ref={cartContainer} onClick={(e) => {
         if (e.target === e.currentTarget) {
           cartContainer.current?.classList.toggle('hidden');
@@ -68,3 +74,27 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+const AuthShowcase: React.FC = () => {
+  const { data: sessionData } = useSession();
+
+  const { data: secretMessage } = api.home.getSecretMessage.useQuery(
+    undefined, // no input
+    { enabled: sessionData?.user !== undefined }
+  );
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4">
+      <p className="text-center text-2xl text-white">
+        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
+        {secretMessage && <span> - {secretMessage}</span>}
+      </p>
+      <button
+        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        onClick={sessionData ? () => void signOut() : () => void signIn("discord")}
+      >
+        {sessionData ? "Sign out" : "Sign in"}
+      </button>
+    </div>
+  );
+};
