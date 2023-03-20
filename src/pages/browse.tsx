@@ -4,7 +4,7 @@ import Link from "next/link";
 import {  useState } from "react";
 
 import { api } from "~/utils/api";
-import HouseFilter from "./filter";
+import HouseFilter from "../components/Filter";
 
 const Browse: NextPage = () => {
   const houses = api.home.getAll.useQuery();

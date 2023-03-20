@@ -3,7 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
 import { Provider } from "react-redux";
 import { persistor, store } from "~/redux/store";
 import { PersistGate } from 'redux-persist/integration/react';

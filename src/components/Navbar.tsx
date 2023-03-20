@@ -48,6 +48,7 @@ const Navbar = () => {
               <div className="col-span-2">
               <img className="w-48 h-full rounded-lg" src={item.image} />
               <p>{item.name}</p>
+              <p>{item.date}</p>
               </div>
               <div className="flex flex-col items-center gap-8">
                 <div className="flex">
@@ -77,24 +78,24 @@ export default Navbar
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
+  const dropdown = useRef<HTMLDivElement | null>(null)
 
-  const { data: secretMessage } = api.home.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined }
-  );
+  function showAccountDropdown() {
+    dropdown.current?.classList.toggle("hidden")
+  }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
+    <div className="flex flex-col items-center justify-center gap-4 relative">
       <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn("discord")}
+        className="bg-white/10 px-10 py-3 font-semibold text-white no-underline transition peer hover:bg-white/20"
+        onClick={sessionData ? () => void showAccountDropdown() : () => void signIn("discord")}
       >
-        {sessionData ? "Sign out" : "Sign in"}
+        {sessionData ? "My Account" : "Sign in"}
       </button>
+      <div ref={dropdown} className="bg-white/10 w-full absolute -bottom-20 hidden peer-hover:bg-white/20">
+        <Link href="/account"><p className="hover:bg-white/30 p-2"><span className="ml-2">My Orders</span></p></Link>
+        <p onClick={() => void signOut()} className="hover:bg-white/30 p-2"><span className="ml-2">Log Out</span></p>
+      </div>
     </div>
   );
 };

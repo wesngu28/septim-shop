@@ -91,21 +91,23 @@ model Upgrade {
 }
 
 model Order {
-    id     String  @id @default(cuid())
-    items  Item[]
-    User   User?   @relation(fields: [userId], references: [stripeId])
-    userId String?
+    id       String   @id @default(cuid())
+    items    Item[]
+    date     DateTime
+    quantity Int
+    User     User?    @relation(fields: [userId], references: [stripeId])
+    userId   String?
 }
 
 model Item {
-    id       String   @id @default(cuid())
+    id       String    @id @default(cuid())
     product  String
     image    String?
     price    Float
     quantity Int
-    date     DateTime?
-    order    Order    @relation(fields: [orderId], references: [id])
+    date     String?
+    order    Order     @relation(fields: [orderId], references: [id])
     orderId  String
     userId   String?
-    user     User?    @relation(fields: [userId], references: [stripeId])
+    user     User?     @relation(fields: [userId], references: [stripeId])
 }
