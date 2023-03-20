@@ -3,6 +3,7 @@ import { prisma } from "~/server/db";
 import type Stripe from "stripe";
 import { buffer } from "micro";
 import { stripe } from "~/server/stripe";
+import session from "redux-persist/lib/storage/session";
 
 export const config = {
   api: {
@@ -10,14 +11,17 @@ export const config = {
   },
 };
 
+interface itemData {
+  image: string
+  date: string
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(" I BEEN HIT !!")
   if (req.method === "POST") {
     const sig = req.headers['stripe-signature'];
-    console.log(sig)
     let event;
 
     try {
@@ -29,7 +33,6 @@ export default async function handler(
       return;
     }
     if (event.type === 'checkout.session.completed') {
-      console.log(event)
       const currSession = event.data.object as Stripe.Checkout.Session
       const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
         currSession.id,
@@ -38,26 +41,34 @@ export default async function handler(
         }
       );
       const lineItems = sessionWithLineItems.line_items;
-
+      const itemsMetadata: Array<itemData> = JSON.parse(sessionWithLineItems.metadata?.item_data as string) as Array<itemData>
       if (currSession.customer?.toString() && lineItems) {
-        const newOrder = await prisma.order.create({
-          data: {
-            User: {
-              connect: {
-                stripeId: currSession.customer?.toString()
+        try {
+          const newOrder = await prisma.order.create({
+            data: {
+              date: new Date(),
+              quantity: Array.from(lineItems.data).reduce((acc, item) => { return acc + (item.quantity ? item.quantity : 0)}, 0),
+              User: {
+                connect: {
+                  stripeId: currSession.customer?.toString()
+                }
               }
             }
-          }
-        })
-        await prisma.item.createMany({
-          data: Array.from(lineItems.data).map(item => ({
-             price: item.amount_total,
-             product: item.description,
-             quantity: item.quantity as number,
-             userId: currSession.customer?.toString(),
-             orderId: newOrder.id
-          }))
-        })
+          })
+          await prisma.item.createMany({
+            data: Array.from(lineItems.data).map((item, i) => ({
+               price: item.amount_total,
+               product: item.description,
+               image: itemsMetadata[i]?.image,
+               date: itemsMetadata[i]?.date,
+               quantity: item.quantity as number,
+               userId: currSession.customer?.toString(),
+               orderId: newOrder.id
+            }))
+          })
+        } catch (err) {
+          console.log(err)
+        }
       }
     }
   } else {
