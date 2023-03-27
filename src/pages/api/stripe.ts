@@ -3,7 +3,7 @@ import { prisma } from "~/server/db";
 import type Stripe from "stripe";
 import { buffer } from "micro";
 import { stripe } from "~/server/stripe";
-import session from "redux-persist/lib/storage/session";
+import { env } from "~/env.mjs";
 
 export const config = {
   api: {
@@ -26,10 +26,10 @@ export default async function handler(
 
     try {
       const buf = await buffer(req)
-      event = stripe.webhooks.constructEvent(buf as Buffer, sig as string, "whsec_21efd93440567bb699f3521cc700577c15e8b0b2c91c62464143ec7ad4d47f86");
-      res.status(200).send({type: "good"})
+      event = stripe.webhooks.constructEvent(buf, sig as string, env.STRIPE_WEBHOOK_SIGNING_SECRET);
+      res.status(200).send("Purchase processed successfully.")
     } catch (err) {
-      res.status(400).send(`Webhook Error: ${err.message as string}`);
+      res.status(400).send(`Error occurred in webhook`);
       return;
     }
     if (event.type === 'checkout.session.completed') {

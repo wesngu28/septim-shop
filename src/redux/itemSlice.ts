@@ -41,11 +41,14 @@ export const cartSlice = createSlice({
         }
       }
       return state;
-    }
+    },
+    clearCart: (state) => {
+      state.cart = []
+    },
   },
 })
 
-export const { addItem, changeQty } = cartSlice.actions
+export const { addItem, changeQty, clearCart } = cartSlice.actions
 
 export const selectCart = (state: RootState) => state.cart
 

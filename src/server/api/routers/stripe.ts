@@ -32,8 +32,8 @@ export const stripeRouter = createTRPCRouter({
         }
       }),
       mode: 'payment',
-      success_url: `http://localhost:3000/?success=true`,
-      cancel_url: `http://localhost:3000/?canceled=true`,
+      success_url: `http://localhost:3000/success`,
+      cancel_url: `http://localhost:3000/canceled`,
       customer: checkoutId,
       client_reference_id: ctx.session?.user.id,
       metadata: {
