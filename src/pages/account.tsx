@@ -21,16 +21,16 @@ const Home: NextPage = () => {
     <div className="">
       <div className="flex gap items-center mb-16 gap-4 justify-center">
         <h2 className="text-3xl text-white font-semibold">Hello, {sessionData?.user.name}</h2>
-        <img src={sessionData?.user.image} />
+        <img src={sessionData?.user.image ?? ""} alt="your profile picture" />
       </div>
-      <div className="w-full flex justify-between gap-36">
+      <div className="w-full flex gap-36">
         <div>
         <h2>Your Orders</h2>
         <div className="">
           {orders.data?.orders?.map((order, i) => {
             if (!order && i === 0) setOrder(order)
             return (
-                <p>{order.userId}</p>
+                <p key={order.id}>{order.date.toLocaleDateString()} {order.date.toLocaleTimeString()}</p>
             )
           })}
         </div>
@@ -46,11 +46,16 @@ const Home: NextPage = () => {
                 return (
                   <div key={item.id}>
                     <div className="flex gap-4 mt-4">
-                      <img className="h-36 w-36" src={item.image} />
-                      <div>
-                        <p className="text-lg font-semibold text-gray-200">{item.product}</p>
-                        <p className="text-lg"><span className="text-xs">x</span>{item.quantity}</p>
-                        <p className="text-lg">{item.price}</p>
+                      <img className="h-36 w-36" alt={item.product} src={item.image ?? ""} />
+                      <div className="flex flex-col justify-between">
+                        <div>
+                          <p className="text-lg font-semibold text-gray-200">{item.product} <span className="text-xs">x</span>{item.quantity}</p>
+                          <p className="text-lg font-thin text-white">Tour on {item.date}</p>
+                        </div>
+                        <div className="flex h-[24px] items-center gap-2 font-thin">
+            Starts at {item.price}
+            <img alt="septim" className="h-full" src="/septim.webp" />
+          </div>
                       </div>
                     </div>
                   </div>

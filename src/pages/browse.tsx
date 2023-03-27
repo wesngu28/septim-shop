@@ -14,9 +14,9 @@ const Browse: NextPage = () => {
   }
 
   return (
-    <div className="flex gap-16">
+    <div className="w-full p-4 sm:p-0 sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:w-auto block sm:flex gap-16">
       <HouseFilter filter={filter} lifted={liftSetFilter} />
-      <div className="grid max-w-7xl grid-cols-5 gap-8 auto-rows-fr">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:max-w-7xl gap-8 auto-rows-fr">
         {houses.data?.filter(house => filter.province.length === 0 || filter.province.includes(house.province)).filter(house => !filter.status || (filter.status === true && house.sellable === true)).sort((a, b) => {
         let aPrice = a.price
         let bPrice = b.price
@@ -56,7 +56,8 @@ const Browse: NextPage = () => {
                 )}
                 <img
                   alt={house.name}
-                  src={house.image[0]}
+                  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                  src={house.image[0]?.includes("https") ? house.image[0] : `/${house.image[0]}`}
                 />
                 <div className="flex flex-col p-2 ml-2">
                   <p className="mt-4 text-xl font-semibold">{house.name}</p>

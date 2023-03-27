@@ -18,7 +18,7 @@ const HouseFilter = ({filter, lifted}: Props) => {
     lifted(newFilter)
   }
   return (
-  <div className="flex h-full flex-col gap-4 text-white">
+  <div className="w-[275px] mb-8 sm:mb-0 sm:w-full flex h-full flex-col gap-4 text-white">
     <p>Sort by Province</p>
     <div>
       <input

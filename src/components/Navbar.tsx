@@ -36,7 +36,7 @@ const Navbar = () => {
         if (e.target === e.currentTarget) {
           cartContainer.current?.classList.toggle('hidden');
         }
-      }} className="hidden fixed w-screen h-screen inset-0 bg-[rgba(0,0,0,.5)]">
+      }} className="hidden fixed w-screen h-screen z-50 inset-0 bg-[rgba(0,0,0,.5)]">
         <div className="absolute right-0 w-[550px] bg-red-700 h-full">
           <div className="p-8">
           <h2 className="mb-2 text-2xl font-semibold tracking-tight">Your Cart</h2>
