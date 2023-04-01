@@ -38,15 +38,17 @@ const Navbar = () => {
         }
       }} className="hidden fixed w-screen h-screen z-50 inset-0 bg-[rgba(0,0,0,.5)]">
         <div className="absolute right-0 w-[550px] bg-red-700 h-full">
-          <div className="p-8">
+          <div className="pt-8 px-8">
           <h2 className="mb-2 text-2xl font-semibold tracking-tight">Your Cart</h2>
           <p>A tour is equal to 10% of the house value.</p>
           </div>
-          <div className="p-8 max-h-[80vh] overflow-y-auto">
+          <div className="p-8 max-h-[75vh] overflow-y-auto">
           {cart.map(item =>
             <div key={item.name} className="grid grid-cols-4 gap-8 items-center my-4">
               <div className="col-span-2">
-              <img className="w-48 h-full rounded-lg" src={item.image} />
+              <img className="w-48 h-full rounded-lg"
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                src={item.image?.includes("https") ? item.image : `/${item.image}`} />
               <p>{item.name}</p>
               <p>{item.date}</p>
               </div>

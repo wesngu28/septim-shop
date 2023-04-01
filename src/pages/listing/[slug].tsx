@@ -32,7 +32,8 @@ const Listing = () => {
           <div className="row-span-2 h-96">
             <img
               className="h-full w-full object-cover"
-              src={data.image[0]}
+              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+              src={data.image[0]?.includes("https") ? data.image[0] : `/${data.image[0]}`}
             />
           </div>
           <img
