@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useEffect } from "react";
 import { useAppDispatch } from "~/redux/store"
 import { clearCart } from "~/redux/itemSlice";
+import Link from "next/link";
 
 const Success: NextPage = () => {
 
@@ -12,8 +13,13 @@ const Success: NextPage = () => {
   }, [dispatch])
 
   return (
-    <div>
-      <p>Order successful!!!</p>
+    <div className="flex flex-col items-center gap-4">
+      <h2 className="text-3xl text-white font-semibold tracking-tight">Order Successful!</h2>
+      <Link href="/account">
+        <button className="bg-white/10 p-2 rounded-md">
+          View your Orders
+        </button>
+      </Link>
     </div>
   );
 };

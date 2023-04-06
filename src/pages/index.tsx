@@ -11,13 +11,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="container flex flex-col items-center justify-center gap-4 px-4 py-16 text-center max-w-7xl">
-        <h1 className="text-6xl font-extrabold tracking-tight">
+        <h1 className="text-5xl font-extrabold tracking-tight text-white">
           Imperial Housing Authority
         </h1>
         <h2 className="mb-16 text-2xl tracking-tight text-gray-300">
           Browse, purchase, or earn beautiful homes across Cyrodiil and Skyrim.
         </h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 mb-12">
           <Link href="/listing/cheydinhal">
             <div className="p-4 text-left text-white">
               <img className="rounded-md" src="https://images.uesp.net/5/5a/OB-place-Cheydinhal_House_For_Sale.jpg" />
@@ -39,11 +39,6 @@ const Home: NextPage = () => {
               <p className="font-sm font-thin">25,000 septims</p>
             </div>
           </Link>
-        </div>
-        <div className="my-8">
-          <button className="mx-4 rounded-lg bg-gray-800 p-4 text-white no-underline transition hover:bg-gray-700">
-            Browse Homes!!
-          </button>
         </div>
         <div className="mb-16 grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
           <div
