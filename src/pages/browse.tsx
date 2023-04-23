@@ -49,7 +49,7 @@ const Browse: NextPage = () => {
               >
                 {!house.sellable && (
                   <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-gray-800 opacity-80">
-                    <span className="rotate-45 transform text-xl font-semibold text-red-500">
+                    <span className="rotate-45 transform text-xl text-center font-semibold text-red-500">
                       Temporarily Unavailable
                     </span>
                   </div>
